@@ -62,17 +62,17 @@ export default defineConfig({
       // dependencies: ['auth-setup'],
     },
 
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-      // dependencies: ['auth-setup'],
-    },
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    //   // dependencies: ['auth-setup'],
+    // },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-      // dependencies: ['auth-setup'],
-    },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    //   // dependencies: ['auth-setup'],
+    // },
 
     /* Mobile viewports */
     // {
