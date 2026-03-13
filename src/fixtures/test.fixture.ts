@@ -4,6 +4,9 @@ import { LoginPage } from '../pages/login.page';
 import { SignUpPage } from '../pages/signup.page';
 import { SearchPage } from '../pages/search.page';
 import { ProductPage } from '../pages/product.page';
+import { EditorPage } from '../pages/editor.page';
+import { CartPage } from '../pages/cart.page';
+import { CheckoutPage } from '../pages/checkout.page';
 
 /**
  * Custom test fixture that injects page objects into every test.
@@ -15,6 +18,9 @@ type PageFixtures = {
   signUpPage: SignUpPage;
   searchPage: SearchPage;
   productPage: ProductPage;
+  editorPage: EditorPage;
+  cartPage: CartPage;
+  checkoutPage: CheckoutPage;
 };
 
 export const test = base.extend<PageFixtures>({
@@ -32,6 +38,15 @@ export const test = base.extend<PageFixtures>({
   },
   productPage: async ({ page }, use) => {
     await use(new ProductPage(page));
+  },
+  editorPage: async ({ page }, use) => {
+    await use(new EditorPage(page));
+  },
+  cartPage: async ({ page }, use) => {
+    await use(new CartPage(page));
+  },
+  checkoutPage: async ({ page }, use) => {
+    await use(new CheckoutPage(page));
   },
 });
 

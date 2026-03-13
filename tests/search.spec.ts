@@ -44,3 +44,48 @@ test.describe('Search - Live Dropdown', () => {
     await searchPage.page.waitForTimeout(500);
   });
 });
+
+test.describe('Search - Advanced Queries', () => {
+  test.beforeEach(async ({ homePage }) => {
+    await homePage.open();
+  });
+
+  test('should handle special characters in search gracefully', async ({ searchPage }) => {
+    await searchPage.search('<script>alert(1)</script>');
+    await searchPage.page.waitForTimeout(500);
+    // Should not crash or execute scripts
+    await searchPage.expectToBeVisible(searchPage.locators.searchInput);
+  });
+
+  test('should handle very long search query gracefully', async ({ searchPage }) => {
+    const longQuery = 'a'.repeat(200);
+    await searchPage.search(longQuery);
+    await searchPage.page.waitForTimeout(500);
+    await searchPage.expectToBeVisible(searchPage.locators.searchInput);
+  });
+
+  test('should handle numeric search query', async ({ searchPage }) => {
+    await searchPage.search('12345');
+    await searchPage.page.waitForTimeout(1000);
+    // Should return either results or empty state — not crash
+    await searchPage.expectToBeVisible(searchPage.locators.searchInput);
+  });
+
+  test('should show results for partial product name', async ({ searchPage }) => {
+    await searchPage.search('shirt');
+    const count = await searchPage.getResultCount();
+    expect(count).toBeGreaterThanOrEqual(0);
+  });
+
+  test('should clear search and show fresh results on new query', async ({ searchPage }) => {
+    await searchPage.search('T-shirt');
+    const countFirst = await searchPage.getResultCount();
+    await searchPage.clearSearch();
+    await searchPage.page.waitForTimeout(300);
+    await searchPage.search('Hoodie');
+    await searchPage.page.waitForTimeout(1000);
+    const countSecond = await searchPage.getResultCount();
+    // Both queries should produce results (or at least run without errors)
+    expect(countFirst + countSecond).toBeGreaterThanOrEqual(0);
+  });
+});

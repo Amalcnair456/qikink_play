@@ -22,3 +22,52 @@ test.describe('Home Page', () => {
     await homePage.expectHeaderVisible();
   });
 });
+
+test.describe('Home Page - Header & Logo', () => {
+  test.beforeEach(async ({ homePage }) => {
+    await homePage.open();
+  });
+
+  test('should display the Qikink logo', async ({ homePage }) => {
+    await homePage.expectToBeVisible(homePage.header.logo);
+  });
+
+  test('should navigate to home when logo is clicked', async ({ homePage, page }) => {
+    await homePage.header.logo.click();
+    await page.waitForLoadState('domcontentloaded');
+    await expect(page).toHaveURL(/\/$|\/home/);
+  });
+
+  test('should display navigation links in header', async ({ homePage }) => {
+    await homePage.expectToBeVisible(homePage.header.productNav);
+    await homePage.expectToBeVisible(homePage.header.aboutUsNav);
+    await homePage.expectToBeVisible(homePage.header.supportNav);
+  });
+
+  test('should display cart icon in header', async ({ homePage }) => {
+    await homePage.expectToBeVisible(homePage.header.cartIcon);
+  });
+
+  test('should display search input in header', async ({ homePage }) => {
+    await homePage.expectToBeVisible(homePage.header.searchInput);
+  });
+});
+
+test.describe('Home Page - Footer', () => {
+  test('should display footer section', async ({ homePage, page }) => {
+    await homePage.open();
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await page.waitForTimeout(1000);
+    const footer = page.locator('footer');
+    await expect(footer).toBeVisible();
+  });
+
+  test('should display footer links', async ({ homePage, page }) => {
+    await homePage.open();
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await page.waitForTimeout(1000);
+    const footerLinks = page.locator('footer a').filter({ hasText: /.+/ });
+    const count = await footerLinks.count();
+    expect(count).toBeGreaterThan(0);
+  });
+});
