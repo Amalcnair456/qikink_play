@@ -58,6 +58,8 @@ export class HomePage extends BasePage {
   }
 
   async clickSupport(): Promise<void> {
+    // Wait for full page hydration before clicking Support (may render after JS load)
+    await this.page.waitForLoadState('domcontentloaded');
     await this.click(this.header.supportNav);
   }
 

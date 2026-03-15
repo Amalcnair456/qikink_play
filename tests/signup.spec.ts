@@ -42,7 +42,7 @@ test.describe('Sign Up - Successful Registration', () => {
     const uniqueEmail = TestDataHelper.uniqueEmail('signup');
     await signUpPage.signUp(TestData.signUp.name, uniqueEmail, TestData.signUp.password, TestData.signUp.phone);
     // After successful sign up, the modal should close, redirect, or show a success state
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('load');
     // Wait for the modal to dismiss or the page to change
     await expect(signUpPage.createAccountHeading).not.toBeVisible({ timeout: 30000 });
   });

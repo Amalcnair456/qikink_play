@@ -35,13 +35,13 @@ test.describe('Login - Valid Credentials', () => {
 
   test('should login successfully and dismiss modal', async ({ loginPage, page }) => {
     await loginPage.login(TestData.validUser.email, TestData.validUser.password);
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('load');
     await expect(loginPage.welcomeBackHeading).not.toBeVisible({ timeout: 15000 });
   });
 
   test('should show logged-in state in header after login', async ({ loginPage, page }) => {
     await loginPage.login(TestData.validUser.email, TestData.validUser.password);
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('load');
     // After login, the "Log in" button in the header should no longer be visible
     await expect(page.getByRole('button', { name: 'Log in' }).first()).not.toBeVisible({ timeout: 15000 });
   });

@@ -11,7 +11,7 @@ test.describe('Profile - Post Login State', () => {
     await homePage.open();
     await homePage.clickLogin();
     await loginPage.login(TestData.validUser.email, TestData.validUser.password);
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('load');
     await expect(page.getByRole('button', { name: 'Log in' }).first()).not.toBeVisible({ timeout: 15000 });
   });
 
@@ -35,7 +35,7 @@ test.describe('Profile - Logout', () => {
     await homePage.open();
     await homePage.clickLogin();
     await loginPage.login(TestData.validUser.email, TestData.validUser.password);
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('load');
     await expect(page.getByRole('button', { name: 'Log in' }).first()).not.toBeVisible({ timeout: 15000 });
 
     // Find and click logout — try opening profile/user menu first, then look for logout option
@@ -83,7 +83,7 @@ test.describe('Profile - Order History', () => {
     await homePage.open();
     await homePage.clickLogin();
     await loginPage.login(TestData.validUser.email, TestData.validUser.password);
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('load');
     await expect(page.getByRole('button', { name: 'Log in' }).first()).not.toBeVisible({ timeout: 15000 });
   });
 

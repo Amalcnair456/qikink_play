@@ -2,6 +2,10 @@ import { test, expect } from '../src/fixtures/test.fixture';
 import { TestData } from '../src/data/test.data';
 import { TestDataHelper } from '../src/utils/test-data.helper';
 
+// Run serially — all checkout tests depend on the editor→cart flow which is
+// sensitive to parallel load on the QA server. Sequential execution avoids timeouts.
+test.describe.configure({ mode: 'serial' });
+
 test.describe('Checkout Page - Form Display', () => {
   test.beforeEach(async ({ editorPage, cartPage }) => {
     // Full flow: editor → cart → checkout

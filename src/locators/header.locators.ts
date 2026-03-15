@@ -20,7 +20,7 @@ export class HeaderLocators {
     this.homeNav = page.getByRole('link', { name: 'Home' }).first();
     this.productNav = page.locator('nav').getByRole('link', { name: 'Product' }).first();
     this.aboutUsNav = page.getByRole('link', { name: 'About Us' }).first();
-    this.supportNav = page.getByRole('button', { name: /Support/i }).first();
+    this.supportNav = page.locator('header button, nav button').filter({ hasText: /^(Resources|Support|How it works)$/i }).first();
     this.searchInput = page.getByPlaceholder(/Search Products, Pages, FAQs/i).first();
     this.searchButton = page.locator('button').filter({ has: page.locator('svg') }).first();
     this.cartIcon = page.locator('header a[href*="cart"], header button[aria-label*="cart"]').first();

@@ -1,6 +1,10 @@
 import { test, expect } from '../src/fixtures/test.fixture';
 import { TestData } from '../src/data/test.data';
 
+// Run serially — all cart tests go through the editor Add-to-Cart flow which is
+// sensitive to parallel load on the QA server. Sequential execution avoids timeouts.
+test.describe.configure({ mode: 'serial' });
+
 test.describe('Cart Page', () => {
   test.beforeEach(async ({ editorPage }) => {
     // Navigate through the editor flow to reach cart with a product
